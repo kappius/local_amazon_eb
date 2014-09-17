@@ -1,61 +1,24 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import time, shutil, os, glob
-from modules import mail
+import time, shutil, os, glob, zipfile
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
-from subprocess import check_output
-import ConfigParser
+from subprocess import call
 
-config = ConfigParser.ConfigParser()
-config.read('/home/ubuntu/medk/importador/config.ini')
-
-ROOT = config.get('paths', 'root')
-POOL = ROOT+config.get('paths', 'pool')
-TRASH = ROOT+config.get('paths', 'trash')
-BACKUP = ROOT+config.get('paths', 'backup')
-
-HOST = config.get('banco', 'host')
-USER = config.get('banco', 'user')
-PASS = config.get('banco', 'pass')
+ROOT = '/opt/deployer/'
+POOL = ROOT+'pool/'
+TRASH = ROOT+'trash/'
+DEPLOY = ROOT+'deploy/'
 
 class DumpHandler(FileSystemEventHandler):
-    def on_moved(self, event):
-        try:
-            output = check_output("bash scripts/backup.sh -p %s -b %s -h %s -u %s -P %s" %(POOL,
-                                                                                           BACKUP,
-                                                                                           HOST,
-                                                                                           USER,
-                                                                                           PASS),
-                                  shell=True)
-        except Exception as e:
-            mail.send(str(e))
-            raise e
-        try:
-            output = check_output("bash scripts/import.sh -p %s -h %s -u %s -P %s" %(POOL,
-                                                                                     HOST,
-                                                                                     USER,
-                                                                                     PASS),
-                                  shell=True)
+    def on_modified(self, event):
 
-        except Exception as e:
-            try:
-                output = check_output("bash scripts/restore.sh -p %s -b %s -h %s -u %s -P %s" %(POOL,
-                                                                                                BACKUP,
-                                                                                                HOST,
-                                                                                                USER,
-                                                                                                PASS),
-                                  shell=True)
-
-            except Exception as e:
-                mail.send(str(e))
-                raise e
-            mail.send(str(e))
-            raise e
-
-        files = glob.iglob(os.path.join(POOL, "*.did"))
+        files = glob.iglob(os.path.join(POOL, "*.zip"))
         for f in files:
             if os.path.isfile(f):
+                with zipfile.ZipFile(os.path.join(POOL, f)) as zip:
+                    zip.extractall(DEPLOY)
+                call(['pip', 'install', '-r', os.path.join(DEPLOY, 'requirements.txt')])
                 shutil.move(f, TRASH)
 
 
