@@ -2,12 +2,7 @@
 ```
 sudo apt-get update
 sudo apt-get -y upgrade
-sudo apt-get -y install openssh-server
-sudo apt-get -y install python
-sudo apt-get -y install python-dev
-sudo apt-get -y install apache2
-sudo apt-get -y install libapache2-mod-wsgi
-sudo apt-get -y install libapache2-mod-proxy-html
+sudo apt-get -y install openssh-server python python-dev apache2 libapache2-mod-wsgi libapache2-mod-proxy-htmlgit
 sudo ln -s /etc/apache2/mods-available/proxy_http.load /etc/apache2/mods-enabled/proxy_http.load
 sudo a2enmod ssl
 sudo a2enmod proxy
