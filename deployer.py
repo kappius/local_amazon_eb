@@ -21,8 +21,9 @@ class DumpHandler(FileSystemEventHandler):
                         zip.extractall(DEPLOY)
                     call(['pip', 'install', '-r', os.path.join(DEPLOY, 'requirements.txt')])
                     shutil.move(f, TRASH)
-                except Exception as e:
+                except Exception, e:
                     print e
+                    continue
 
 
 if __name__ == "__main__":
