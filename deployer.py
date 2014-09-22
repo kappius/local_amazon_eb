@@ -5,10 +5,10 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 from subprocess import call
 
-ROOT = '/opt/deployer/'
-POOL = ROOT+'pool/'
-TRASH = ROOT+'trash/'
-DEPLOY = ROOT+'deploy/'
+ROOT = os.environ['INSTALL_DIR']
+POOL = os.environ['POOL_DIR']
+TRASH = os.environ['TRASH_DIR']
+DEPLOY = os.environ['DEPLOY_DIR']
 
 class DumpHandler(FileSystemEventHandler):
     def on_modified(self, event):
