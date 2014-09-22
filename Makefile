@@ -29,7 +29,7 @@ install:
 ubuntu_install:
 	apt-get update
 	apt-get -y upgrade
-	apt-get -y install openssh-server python python-dev apache2 libapache2-mod-wsgi libapache2-mod-proxy-html git openssl python-pip
+	apt-get -y install openssh-server python python-dev apache2 libapache2-mod-wsgi libapache2-mod-proxy-html git openssl python-pip libmysqlclient-dev
 	-ln -s /etc/apache2/mods-available/proxy_http.load /etc/apache2/mods-enabled/proxy_http.load
 	a2enmod ssl
 	a2enmod proxy
