@@ -21,7 +21,7 @@ sync:
 	cd $(INSTALL_DIR) && pip install -r requirements.txt
 
 run:
-	python $(INSTALL_DIR)/deployer.py > $(INSTALL_DIR)/deployer.log &	
+	python $(INSTALL_DIR)/deployer.py > $(INSTALL_DIR)/deployer.log 2>&1 &	
 
 install:
 	$(MAKE) ubuntu_install
