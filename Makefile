@@ -18,6 +18,7 @@ all:
 
 sync:
 	cd $(INSTALL_DIR) && git pull origin master
+	cd $(INSTALL_DIR) && pip install -r requirements.txt
 
 run:
 	python $(INSTALL_DIR)/deployer.py > $(INSTALL_DIR)/deployer.log &	
