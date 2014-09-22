@@ -24,6 +24,7 @@ class DumpHandler(FileSystemEventHandler):
                 except Exception, e:
                     print e
                     continue
+                call(['chown', '-R', 'www-data:www-data', DEPLOY])
 
 
 if __name__ == "__main__":
