@@ -43,6 +43,19 @@ ubuntu_install:
 	chown -R www-data:www-data $(INSTALL_DIR)
 	-mkdir -p /private/var/log/apache2/
 	cp python.conf /etc/apache2/sites-available/
+	a2dissite 000-default
 	a2ensite python
 	service apache2 restart
+	$(MAKE) startup
 
+startup:
+	echo "#!/usr/bin/env bash" > start_amazon
+	echo "cd $(INSTALL_DIR);" >> start_amazon
+	echo "make sync;" >> start_amazon
+	echo "make run;" >> start_amazon
+	$(MAKE) ubuntu_startup
+
+ubuntu_startup:
+	cp start_amazon /etc/init.d/
+	chmod +x /etc/init.d/start_amazon
+	update-rc.d start_amazon defaults
