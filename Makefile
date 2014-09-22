@@ -1,4 +1,4 @@
-# Installs web2py and makes symlinks.
+# Installs server configuration for ubuntu.
 
 INSTALL_DIR = $(abspath /opt/deployer)
 export INSTALL_DIR
