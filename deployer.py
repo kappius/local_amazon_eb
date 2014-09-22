@@ -16,10 +16,13 @@ class DumpHandler(FileSystemEventHandler):
         files = glob.iglob(os.path.join(POOL, "*.zip"))
         for f in files:
             if os.path.isfile(f):
-                with zipfile.ZipFile(os.path.join(POOL, f)) as zip:
-                    zip.extractall(DEPLOY)
-                call(['pip', 'install', '-r', os.path.join(DEPLOY, 'requirements.txt')])
-                shutil.move(f, TRASH)
+                try:
+                    with zipfile.ZipFile(os.path.join(POOL, f)) as zip:
+                        zip.extractall(DEPLOY)
+                    call(['pip', 'install', '-r', os.path.join(DEPLOY, 'requirements.txt')])
+                    shutil.move(f, TRASH)
+                except Exception as e:
+                    print e
 
 
 if __name__ == "__main__":
