@@ -18,7 +18,7 @@ all:
 
 install startup run sync:
 ifeq ($(ON),supervisor)
-	$(MAKE) install -C supervisor
+	$(MAKE) $(MAKECMDGOALS) -C supervisor
 else
-	$(MAKE) install -C worker
+	$(MAKE) $(MAKECMDGOALS) -C worker
 endif
