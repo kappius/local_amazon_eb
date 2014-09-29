@@ -1,5 +1,6 @@
 # Installs server configuration for ubuntu workers and centos supervisor.
-
+ROOT_DIR = $(abspath ./)
+export ROOT_DIR
 INSTALL_DIR = $(abspath /opt/deployer)
 export INSTALL_DIR
 POOL_DIR = $(abspath /opt/deployer/pool)

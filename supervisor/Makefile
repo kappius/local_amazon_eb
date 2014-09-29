@@ -9,12 +9,12 @@ all:
 
 
 sync:
-	cd $(INSTALL_DIR) && git pull origin master
-	yum install -y $(shell cat $(INSTALL_DIR)/supervisor/system_dep.txt)
-	cd $(INSTALL_DIR) && pip install -r requirements.txt
+	cd $(ROOT_DIR) && git pull origin master
+	yum install -y $(shell cat $(ROOT_DIR)/supervisor/system_dep.txt)
+	cd $(ROOT_DIR) && pip install -r requirements.txt
 
 run:
-	bash $(INSTALL_DIR)/supervisor/start.sh
+	bash $(ROOT_DIR)/supervisor/start.sh
 
 install:
 	$(MAKE) centos_install
@@ -28,7 +28,7 @@ startup:
 	echo "#!/usr/bin/env bash" > start_amazon
 	echo "# chkconfig: 345 99 10" >> start_amazon
 	echo "# description: start-amazon-supervidor" >> start_amazon
-	echo "cd $(INSTALL_DIR);" >> start_amazon
+	echo "cd $(ROOT_DIR);" >> start_amazon
 	echo "make sync ON=supervisor;" >> start_amazon
 	echo "make run ON=supervisor;" >> start_amazon
 	$(MAKE) centos_startup

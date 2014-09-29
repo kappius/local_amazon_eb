@@ -8,12 +8,12 @@ all:
 
 
 sync:
-	cd $(INSTALL_DIR) && git pull origin master
-	apt-get install -y $(shell cat $(INSTALL_DIR)/worker/system_dep.txt)
-	cd $(INSTALL_DIR) && pip install -r requirements.txt
+	cd $(ROOT_DIR) && git pull origin master
+	apt-get install -y $(shell cat $(ROOT_DIR)/worker/system_dep.txt)
+	cd $(ROOT_DIR) && pip install -r requirements.txt
 
 run:
-	python $(INSTALL_DIR)/worker/deployer.py > $(INSTALL_DIR)/worker/deployer.log &	
+	python $(ROOT_DIR)/worker/deployer.py > $(ROOT_DIR)/worker/deployer.log &	
 
 
 install:
@@ -44,7 +44,7 @@ ubuntu_install:
 
 startup:
 	echo "#!/usr/bin/env bash" > start_amazon
-	echo "cd $(INSTALL_DIR);" >> start_amazon
+	echo "cd $(ROOT_DIR);" >> start_amazon
 	echo "make sync;" >> start_amazon
 	echo "make run;" >> start_amazon
 	$(MAKE) ubuntu_startup
