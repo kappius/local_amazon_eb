@@ -21,7 +21,7 @@ install:
 
 centos_install:
 	yum -y install openssh-server python python-dev python-pip
-	-mkdir -p $(eval $(WORKERS_DIR))
+	-mkdir -p $(WORKERS_DIR)
 	$(MAKE) startup
 
 startup:
