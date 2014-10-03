@@ -14,7 +14,7 @@ sync:
 	cd $(ROOT_DIR) && pip install -r requirements.txt
 
 run:
-	bash $(ROOT_DIR)/supervisor/start.sh
+	bash $(ROOT_DIR)/supervisor/start.sh &
 
 install:
 	$(MAKE) centos_install
