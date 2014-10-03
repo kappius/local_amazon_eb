@@ -20,7 +20,7 @@ class DumpHandler(FileSystemEventHandler):
                     with zipfile.ZipFile(os.path.join(POOL, f)) as zip:
                         zip.extractall(DEPLOY)
                     call(['pip', 'install', '-r', os.path.join(DEPLOY, 'requirements.txt')])
-                    shutil.move(f, TRASH)
+                    shutil.move(os.path.join(POOL, f), TRASH)
                 except Exception, e:
                     print e
                     continue
