@@ -2,4 +2,4 @@ export WORKERS_DIR=$(INSTALL_DIR)/192.168.10.240 $(INSTALL_DIR)/192.168.10.241 $
 export WORKERS_UUID=173eec26-39b9-5cec-cc7f-8a30265ed4c5 1 2 3 4
 export WORKERS_NAME=c6503bb7-7515-6aae-5f73-405f58285767 1 2 3 4
 export WORKER_USER=root
-export WORKER_MACHINE_DIR=/opt/deployer/deploy
+export WORKER_MACHINE_DIR=/opt/deployer/pool
