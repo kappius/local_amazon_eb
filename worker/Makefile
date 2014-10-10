@@ -3,6 +3,8 @@
 
 .PHONY: all run sync install
 
+include env_vars
+
 all:
 	$(error Please specify target. Valid targets are: install, run or sync)
 
@@ -17,7 +19,7 @@ run:
 
 
 install:
-	$(MAKE) ubuntu_install
+	$(MAKE) $(SERVER_TYPE)_install
 
 
 ubuntu_install:
@@ -40,16 +42,16 @@ ubuntu_install:
 	a2dissite 000-default
 	a2ensite python
 	service apache2 restart
-	$(MAKE) startup
+	$(MAKE) updaterc_startup
 
 startup:
 	echo "#!/usr/bin/env bash" > start_amazon
 	echo "cd $(ROOT_DIR);" >> start_amazon
 	echo "make sync;" >> start_amazon
 	echo "make run;" >> start_amazon
-	$(MAKE) ubuntu_startup
 
-ubuntu_startup:
+updaterc_startup:
+	$(MAKE) startup
 	cp start_amazon /etc/init.d/
 	chmod +x /etc/init.d/start_amazon
 	update-rc.d start_amazon defaults

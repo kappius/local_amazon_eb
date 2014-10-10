@@ -17,9 +17,10 @@ run:
 	bash $(ROOT_DIR)/supervisor/start.sh > $(ROOT_DIR)/supervisor/start.log &
 
 install:
-	$(MAKE) centos_install
+	$(MAKE) user
+	$(MAKE) $(SERVER_TYPE)_install
 
-centos_install:
+xenserver_install:
 	yum -y install openssh-server python python-devel
 	wget http://www.python.org/ftp/python/2.7.6/Python-2.7.6.tar.xz
 	xz -d Python-2.7.6.tar.xz
@@ -30,7 +31,13 @@ centos_install:
 	rm -rf Python*
 	curl -L https://bootstrap.pypa.io/get-pip.py | python2.7
 	-mkdir -p $(WORKERS_DIR)
-	$(MAKE) startup
+	$(MAKE) chkconfig_startup
+
+user:
+	adduser $(ACCESS_USER)
+	groupadd $(ACCESS_GROUP)
+	useradd -g $(ACCESS_USER) $(ACCESS_GROUP)
+	chown -R $(ACCESS_USER):$(ACCESS_GROUP) $(INSTALL_DIR) 
 
 startup:
 	echo "#!/usr/bin/env bash" > start_amazon
@@ -39,9 +46,9 @@ startup:
 	echo "cd $(ROOT_DIR);" >> start_amazon
 	echo "make sync ON=supervisor;" >> start_amazon
 	echo "make run ON=supervisor;" >> start_amazon
-	$(MAKE) centos_startup
 
-centos_startup:
+chkconfig_startup:
+	$(MAKE) startup
 	cp start_amazon /etc/init.d/
 	chmod +x /etc/init.d/start_amazon
 	chkconfig --add start_amazon
