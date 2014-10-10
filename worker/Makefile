@@ -5,7 +5,9 @@
 
 include env_vars
 
+
 all:
+	@echo $(ENVVAR_NAME)
 	$(error Please specify target. Valid targets are: install, run or sync)
 
 
