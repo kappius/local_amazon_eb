@@ -13,4 +13,5 @@ for d in ${WORKERS_DIR}; do
 	    $d;
 	let COUNTER=COUNTER+1;
 	export COUNTER;
+	echo $d;
 done;
