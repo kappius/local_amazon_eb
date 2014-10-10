@@ -17,8 +17,8 @@ run:
 	bash $(ROOT_DIR)/supervisor/start.sh > $(ROOT_DIR)/supervisor/start.log &
 
 install:
-	$(MAKE) user
 	$(MAKE) $(SERVER_TYPE)_install
+	$(MAKE) user
 
 xenserver_install:
 	yum -y install openssh-server python python-devel
