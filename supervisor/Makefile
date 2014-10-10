@@ -45,7 +45,7 @@ user:
 startup:
 	echo "#!/usr/bin/env bash" > start_amazon
 	echo "# chkconfig: 345 99 10" >> start_amazon
-	echo "# description: start-amazon-supervidor" >> start_amazon
+	echo "# description: start-amazon-supervisor" >> start_amazon
 	echo "cd $(ROOT_DIR);" >> start_amazon
 	echo "make sync ON=supervisor;" >> start_amazon
 	echo "make run ON=supervisor;" >> start_amazon
