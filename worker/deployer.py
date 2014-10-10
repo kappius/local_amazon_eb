@@ -11,7 +11,7 @@ TRASH = os.environ['TRASH_DIR']
 DEPLOY = os.environ['DEPLOY_DIR']
 
 class DumpHandler(FileSystemEventHandler):
-    def on_modified(self, event):
+    def on_any_event(self, event):
 
         files = glob.iglob(os.path.join(POOL, "*.zip"))
         for f in files:
