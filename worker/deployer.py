@@ -7,6 +7,11 @@ ROOT = os.environ['INSTALL_DIR']
 POOL = os.environ['POOL_DIR']
 TRASH = os.environ['TRASH_DIR']
 DEPLOY = os.environ['DEPLOY_DIR']
+SUPERVISOR_USER = os.environ['SUPERVISOR_USER']
+SUPERVISOR_IP = os.environ['SUPERVISOR_IP']
+ENVVAR_PATH = os.environ['ENVVAR_PATH']
+ENVVAR_NAME = os.environ['ENVVAR_NAME']
+
 
 while True:
     files = glob.iglob(os.path.join(POOL, "*.zip"))
