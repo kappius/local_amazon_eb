@@ -37,9 +37,9 @@ add_python:
 	curl -L https://bootstrap.pypa.io/get-pip.py | python2.7
 
 user:
-	adduser $(ACCESS_USER)
-	groupadd $(ACCESS_GROUP)
-	useradd -g $(ACCESS_USER) $(ACCESS_GROUP)
+	-adduser $(ACCESS_USER)
+	-groupadd $(ACCESS_GROUP)
+	-useradd -g $(ACCESS_USER) $(ACCESS_GROUP)
 	chown -R $(ACCESS_USER):$(ACCESS_GROUP) $(INSTALL_DIR) 
 
 startup:
