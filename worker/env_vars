@@ -1,5 +1,5 @@
 export SERVER_TYPE=ubuntu
 export SUPERVISOR_USER=root
 export SUPERVISOR_IP=192.168.10.249
-export ENVVAR_NAME=$(ip addr | grep 'state UP' -A2 | tail -n1 | awk '{print $2}' | cut -f1  -d'/')
+export ENVVAR_NAME=$(shell ip addr | grep 'state UP' -A2 | tail -n1 | awk '{print $2}' | cut -f1  -d'/')
 export ENVVAR_PATH=/root/env_vars/$(ENVVAR_NAME)
