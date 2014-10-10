@@ -10,7 +10,7 @@ for d in ${WORKERS_DIR}; do
 	    --command="xe snapshot-revert snapshot-uuid=${UUIDS[$COUNTER]};xe vm-start -u root vm=${NAMES[$COUNTER]};"'scp -o ConnectionAttempts=10000 ${watch_src_path} '"${WORKER_USER}@${IP}:${WORKER_MACHINE_DIR}/; " \
 	    --wait \
 	    --drop \
-	    $d;
+	    $d &
 	let COUNTER=COUNTER+1;
 	export COUNTER;
 	echo $d;
