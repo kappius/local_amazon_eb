@@ -19,7 +19,11 @@ while True:
                 shutil.move(os.path.join(POOL, f), TRASH)
             except Exception, e:
                 print e
-                continue
+                sys.exit()
             call(['chown', '-R', 'www-data:www-data', DEPLOY])
+            call(['scp', '%s@%s:%s' %(SUPERVISOR_USER, SUPERVISOR_IP, ENVVAR_PATH), DEPLOY])
+            call(['sed', '-i', 's/\(\(.*\)\)/export \1/', os.path.join(DEPLOY, ENVVAR_NAME)])
+            call('cat', [os.path.join(DEPLOY, ENVVAR_NAME), '>>', '~/.bashrc'])
+            call('source', '~/.bashrc')
             sys.exit()
     time.sleep(1)
