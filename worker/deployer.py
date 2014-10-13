@@ -13,7 +13,7 @@ SUPERVISOR_USER = os.environ['SUPERVISOR_USER']
 SUPERVISOR_IP = os.environ['SUPERVISOR_IP']
 ENVVAR_PATH = os.environ['ENVVAR_PATH']
 ENVVAR_NAME = os.environ['ENVVAR_NAME']
-USER_HOME = os.path.expanduser('~')
+APACHE_ENVVARS = '/etc/apache2/envvars'
 
 while True:
     files = glob.iglob(os.path.join(POOL, "*.zip"))
@@ -39,9 +39,9 @@ while True:
             scp.get(ENVVAR_PATH, ROOT)
 
             with open(os.path.join(ROOT, ENVVAR_NAME), 'r') as env_vars:
-                with open(os.path.join(USER_HOME, '.bashrc'), 'a') as bashrc:
+                with open(APACHE_ENVVARS, 'a') as sys_envvars:
                     for env_var in env_vars:
-                        bashrc.write('export %s' % env_var)
+                        sys_envvars.write('export %s' % env_var)
             call(['shutdown', '-r', 'now'])
             sys.exit()
     time.sleep(1)
