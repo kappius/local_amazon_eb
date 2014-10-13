@@ -38,7 +38,7 @@ while True:
 
             scp.get(ENVVAR_PATH, ROOT)
 
-            with open(os.path.join(ROOT, ENVVAR_NAME), 'a') as env_vars:
+            with open(os.path.join(ROOT, ENVVAR_NAME), 'r') as env_vars:
                 with open(os.path.join(USER_HOME, '.bashrc'), 'a') as bashrc:
                     for env_var in env_vars:
                         bashrc.write('export %s' % env_var)
