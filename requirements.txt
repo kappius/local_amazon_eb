@@ -1,4 +1,8 @@
 PyYAML==3.11
 argh==0.25.0
+ecdsa==0.11
+paramiko==1.15.1
 pathtools==0.1.2
+pycrypto==2.6.1
+scp==0.8.0
 watchdog==0.8.1
