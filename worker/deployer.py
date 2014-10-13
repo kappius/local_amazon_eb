@@ -41,7 +41,7 @@ while True:
             with open(os.path.join(ROOT, ENVVAR_NAME), 'a') as env_vars:
                 with open('~/.bashrc', 'a') as bashrc:
                     for env_var in env_vars:
-                        bashrc.write('export %s', % env_var)
+                        bashrc.write('export %s' % env_var)
             call(['source', '~/.bashrc'])
             sys.exit()
     time.sleep(1)
