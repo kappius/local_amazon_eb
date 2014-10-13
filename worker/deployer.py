@@ -42,6 +42,6 @@ while True:
                 with open(os.path.join(USER_HOME, '.bashrc'), 'a') as bashrc:
                     for env_var in env_vars:
                         bashrc.write('export %s' % env_var)
-            call(['source', os.path.join(USER_HOME, '.bashrc')])
+            call(['shutdown', '-r', 'now'])
             sys.exit()
     time.sleep(1)
