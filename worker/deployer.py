@@ -38,8 +38,10 @@ while True:
 
             scp.get(ENVVAR_PATH)
 
-            call(['sed', '-i', 's/\(\(.*\)\)/export \1/', os.path.join(ROOT, ENVVAR_NAME)])
-            call(['cat', os.path.join(ROOT, ENVVAR_NAME), '>>', '~/.bashrc'])
+            with open(os.path.join(ROOT, ENVVAR_NAME), 'a') as env_vars:
+                with open('~/.bashrc', 'a') as bashrc:
+                    for env_var in env_vars:
+                        bashrc.write('export %s', % env_var)
             call(['source', '~/.bashrc'])
             sys.exit()
     time.sleep(1)
