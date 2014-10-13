@@ -1,5 +1,5 @@
 export SERVER_TYPE=ubuntu
 export SUPERVISOR_USER=root
 export SUPERVISOR_IP=192.168.10.249
-export ENVVAR_NAME=$(shell hostname -I)
+export ENVVAR_NAME=$(shell hostname -I | tr -d ' ')
 export ENVVAR_PATH=/root/env_vars/$(ENVVAR_NAME)
