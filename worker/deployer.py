@@ -36,7 +36,7 @@ while True:
             # SCPCLient takes a paramiko transport as its only argument
             scp = SCPClient(ssh.get_transport())
 
-            scp.get(ENVVAR_PATH)
+            scp.get(ENVVAR_PATH, ROOT)
 
             with open(os.path.join(ROOT, ENVVAR_NAME), 'a') as env_vars:
                 with open('~/.bashrc', 'a') as bashrc:
