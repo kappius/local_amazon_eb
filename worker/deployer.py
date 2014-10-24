@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import time, shutil, os, glob, zipfile, sys
 from subprocess import call
-from paramiko import SSHClient
+from paramiko import SSHClient, AutoAddPolicy
 from scp import SCPClient
 
 ROOT = os.environ['INSTALL_DIR']
@@ -31,6 +31,7 @@ while True:
 
             ssh = SSHClient()
             ssh.load_system_host_keys()
+            ssh.set_missing_host_key_policy(AutoAddPolicy())
             ssh.connect(SUPERVISOR_IP,username=SUPERVISOR_USER)
 
             # SCPCLient takes a paramiko transport as its only argument
