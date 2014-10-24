@@ -13,6 +13,8 @@ SUPERVISOR_USER = os.environ['SUPERVISOR_USER']
 SUPERVISOR_IP = os.environ['SUPERVISOR_IP']
 ENVVAR_PATH = os.environ['ENVVAR_PATH']
 ENVVAR_NAME = os.environ['ENVVAR_NAME']
+POST_INSTALL_PATH = os.environ['POST_INSTALL_PATH']
+POST_INSTALL_NAME = os.environ['POST_INSTALL_NAME']
 APACHE_ENVVARS = '/etc/apache2/envvars'
 
 while True:
@@ -26,6 +28,7 @@ while True:
                 shutil.move(os.path.join(POOL, f), TRASH)
             except Exception, e:
                 print e
+
                 sys.exit()
             call(['chown', '-R', 'www-data:www-data', DEPLOY])
 
@@ -37,6 +40,8 @@ while True:
             scp = SCPClient(ssh.get_transport())
 
             scp.get(ENVVAR_PATH, ROOT)
+            scp.get(POST_INSTALL_PATH, ROOT)
+            call(['bash', os.path.join(ROOT, POST_INSTALL_NAME)])
 
             with open(os.path.join(ROOT, ENVVAR_NAME), 'r') as env_vars:
                 with open(APACHE_ENVVARS, 'a') as sys_envvars:
