@@ -48,6 +48,6 @@ while True:
                 with open(APACHE_ENVVARS, 'a') as sys_envvars:
                     for env_var in env_vars:
                         sys_envvars.write('export %s' % env_var)
-            #call(['shutdown', '-r', 'now'])
+            call(['shutdown', '-r', 'now'])
             sys.exit()
     time.sleep(1)
