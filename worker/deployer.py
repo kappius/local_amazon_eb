@@ -42,7 +42,7 @@ while True:
 
             scp.get(ENVVAR_PATH, ROOT)
             scp.get(POST_INSTALL_PATH, ROOT)
-            call(['bash', os.path.join(ROOT, POST_INSTALL_NAME)], shell=True)
+            call(os.path.join(ROOT, POST_INSTALL_NAME), shell=True)
 
             with open(os.path.join(ROOT, ENVVAR_NAME), 'r') as env_vars:
                 with open(APACHE_ENVVARS, 'a') as sys_envvars:
