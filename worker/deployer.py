@@ -36,7 +36,7 @@ def post_install():
     log = ''
     if POST_INSTALL_NAME:
         scp.get(POST_INSTALL_PATH, ROOT)
-        log += subprocess.check_output(os.path.join(ROOT, POST_INSTALL_NAME))
+        log += subprocess.check_output([os.path.join(ROOT, POST_INSTALL_NAME)])
     return log
 
 def add_envvars():
