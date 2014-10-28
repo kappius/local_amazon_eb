@@ -55,16 +55,16 @@ def zip_to_deploy(f):
     log = ''
     with zipfile.ZipFile(os.path.join(POOL, f)) as zip:
         log += zip.extractall(DEPLOY)
-    process = subprocess.Popen(['pip', 'install', '-r', os.path.join(DEPLOY, 'requirements.txt')], stdout=subprocess.PIPE, shell=True)
+    process = subprocess.Popen(['pip', 'install', '-r', os.path.join(DEPLOY, 'requirements.txt')], stdout=subprocess.PIPE)
     log += process.communicate()[0]
     log += shutil.move(os.path.join(POOL, f), TRASH)
-    process = subprocess.Popen(['chown', '-R', 'www-data:www-data', DEPLOY], stdout=subprocess.PIPE, shell=True)
+    process = subprocess.Popen(['chown', '-R', 'www-data:www-data', DEPLOY], stdout=subprocess.PIPE)
     log += process.communicate()[0]
     return log
 
 def restart_server():
     """Restart worker server"""
-    subprocess.Popen(['shutdown', '-r', 'now'], shell=True)
+    subprocess.Popen(['shutdown', '-r', 'now'])
     log += process.communicate()[0]
     return log
 
