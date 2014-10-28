@@ -35,19 +35,20 @@ def post_install():
     """Execute post installation script"""
     log = ''
     if POST_INSTALL_NAME:
-        log += scp.get(POST_INSTALL_PATH, ROOT)
+        scp.get(POST_INSTALL_PATH, ROOT)
         log += subprocess.check_output(os.path.join(ROOT, POST_INSTALL_NAME))
     return log
 
 def add_envvars():
     """Add envvars to apache"""
-    log = ''
-    log += scp.get(ENVVAR_PATH, ROOT)
-    with open(os.path.join(ROOT, ENVVAR_NAME), 'r') as env_vars:
-        with open(APACHE_ENVVARS, 'a') as sys_envvars:
-            for env_var in env_vars:
-                log += sys_envvars.write('export %s' % env_var)
-    return log
+    try:
+        scp.get(ENVVAR_PATH, ROOT)
+        with open(os.path.join(ROOT, ENVVAR_NAME), 'r') as env_vars:
+            with open(APACHE_ENVVARS, 'a') as sys_envvars:
+                for env_var in env_vars:
+                    sys_envvars.write('export %s' % env_var)
+    except Exception as e:
+        return e
 
 def zip_to_deploy(f):
     """Get zip file and make deploy in correct folder"""
