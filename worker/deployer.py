@@ -36,8 +36,7 @@ def post_install():
     log = ''
     if POST_INSTALL_NAME:
         log += scp.get(POST_INSTALL_PATH, ROOT)
-        subprocess.Popen(os.path.join(ROOT, POST_INSTALL_NAME))
-        log += process.communicate()[0]
+        log += subprocess.check_output(os.path.join(ROOT, POST_INSTALL_NAME))
     return log
 
 def add_envvars():
@@ -55,17 +54,14 @@ def zip_to_deploy(f):
     log = ''
     with zipfile.ZipFile(os.path.join(POOL, f)) as zip:
         log += zip.extractall(DEPLOY)
-    process = subprocess.Popen(['pip', 'install', '-r', os.path.join(DEPLOY, 'requirements.txt')], stdout=subprocess.PIPE)
-    log += process.communicate()[0]
+    log += subprocess.check_output(['pip', 'install', '-r', os.path.join(DEPLOY, 'requirements.txt')], stdout=subprocess.PIPE)
     log += shutil.move(os.path.join(POOL, f), TRASH)
-    process = subprocess.Popen(['chown', '-R', 'www-data:www-data', DEPLOY], stdout=subprocess.PIPE)
-    log += process.communicate()[0]
+    log += subprocess.check_output(['chown', '-R', 'www-data:www-data', DEPLOY], stdout=subprocess.PIPE)
     return log
 
 def restart_server():
     """Restart worker server"""
-    subprocess.Popen(['shutdown', '-r', 'now'])
-    log += process.communicate()[0]
+    log += subprocess.check_output(['shutdown', '-r', 'now'])
     return log
 
 # Start loop waiting zip
