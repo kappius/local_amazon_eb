@@ -55,7 +55,7 @@ def zip_to_deploy(f):
     with zipfile.ZipFile(os.path.join(POOL, f)) as zip:
         zip.extractall(DEPLOY)
     log += subprocess.check_output(['pip', 'install', '-r', os.path.join(DEPLOY, 'requirements.txt')])
-    log += shutil.move(os.path.join(POOL, f), TRASH)
+    shutil.move(os.path.join(POOL, f), TRASH)
     log += subprocess.check_output(['chown', '-R', 'www-data:www-data', DEPLOY])
     return log
 
