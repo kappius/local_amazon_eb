@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import time, shutil, os, glob, zipfile, sys
+import time, shutil, os, glob, zipfile, sys, logging
 from subprocess import call
 from paramiko import SSHClient, AutoAddPolicy
 from scp import SCPClient
@@ -27,37 +27,42 @@ ssh.connect(SUPERVISOR_IP,username=SUPERVISOR_USER)
 # SCPCLient takes a paramiko transport as its only argument
 scp = SCPClient(ssh.get_transport())
 
+# Make log file
+logging.basicConfig(filename='debug.log',level=logging.DEBUG)
+
 # Helper functions
 
 def post_install():
     """Execute post installation script"""
-    scp.get(POST_INSTALL_PATH, ROOT)
-    call(os.path.join(ROOT, POST_INSTALL_NAME))
+    log = ''
+    if POST_INSTALL_NAME:
+        log += scp.get(POST_INSTALL_PATH, ROOT)
+        log += call(os.path.join(ROOT, POST_INSTALL_NAME))
+    return log
 
 def add_envvars():
     """Add envvars to apache"""
-    scp.get(ENVVAR_PATH, ROOT)
+    log = ''
+    log += scp.get(ENVVAR_PATH, ROOT)
     with open(os.path.join(ROOT, ENVVAR_NAME), 'r') as env_vars:
         with open(APACHE_ENVVARS, 'a') as sys_envvars:
             for env_var in env_vars:
-                sys_envvars.write('export %s' % env_var)
+                log += sys_envvars.write('export %s' % env_var)
+    return log
 
 def zip_to_deploy(f):
     """Get zip file and make deploy in correct folder"""
-    try:
-        with zipfile.ZipFile(os.path.join(POOL, f)) as zip:
-            zip.extractall(DEPLOY)
-        call(['pip', 'install', '-r', os.path.join(DEPLOY, 'requirements.txt')])
-        shutil.move(os.path.join(POOL, f), TRASH)
-    except Exception, e:
-        print e
-        sys.exit()
-
-    call(['chown', '-R', 'www-data:www-data', DEPLOY])
+    log = ''
+    with zipfile.ZipFile(os.path.join(POOL, f)) as zip:
+        log += zip.extractall(DEPLOY)
+    log += call(['pip', 'install', '-r', os.path.join(DEPLOY, 'requirements.txt')])
+    log += shutil.move(os.path.join(POOL, f), TRASH)
+    log += call(['chown', '-R', 'www-data:www-data', DEPLOY])
+    return log
 
 def restart_server():
     """Restart worker server"""
-    call(['shutdown', '-r', 'now'])
+    return call(['shutdown', '-r', 'now'])
 
 # Start loop waiting zip
 while True:
@@ -65,12 +70,12 @@ while True:
     for f in files:
         if os.path.isfile(f):
             
-            zip_to_deploy(f)
+            logging.debug(zip_to_deploy(f))
 
-            add_envvars()
+            logging.debug(add_envvars())
 
-            post_install()
+            logging.debug(post_install())
 
-            restart_server()
+            logging.debug(restart_server())
 
     time.sleep(1)
