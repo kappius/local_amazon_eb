@@ -28,7 +28,7 @@ ssh.connect(SUPERVISOR_IP,username=SUPERVISOR_USER)
 scp = SCPClient(ssh.get_transport())
 
 # Make log file
-logging.basicConfig(filename='debug.log',level=logging.DEBUG)
+logging.basicConfig(filename='debug.log', filemode='a+', level=logging.DEBUG)
 
 # Helper functions
 
@@ -60,10 +60,6 @@ def zip_to_deploy(f):
     log += call(['chown', '-R', 'www-data:www-data', DEPLOY])
     return log
 
-def restart_server():
-    """Restart worker server"""
-    return call(['shutdown', '-r', 'now'])
-
 # Start loop waiting zip
 while True:
     files = glob.iglob(os.path.join(POOL, "*.zip"))
@@ -76,6 +72,6 @@ while True:
 
             logging.debug(post_install())
 
-            logging.debug(restart_server())
+            logging.debug(call(['shutdown', '-r', 'now']))
 
     time.sleep(1)
