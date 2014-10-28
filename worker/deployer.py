@@ -62,7 +62,7 @@ def zip_to_deploy(f):
 
 def restart_server():
     """Restart worker server"""
-    log += subprocess.check_output(['shutdown', '-r', 'now'])
+    log = subprocess.check_output(['shutdown', '-r', 'now'])
     return log
 
 # Start loop waiting zip
