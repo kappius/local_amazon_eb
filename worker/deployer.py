@@ -27,7 +27,7 @@ ssh.connect(SUPERVISOR_IP,username=SUPERVISOR_USER)
 scp = SCPClient(ssh.get_transport())
 
 # Make log file
-logging.basicConfig(filename='debug.log', filemode='a+', level=logging.DEBUG)
+logging.basicConfig(filename='debug.log', level=logging.DEBUG)
 
 # Helper functions
 
@@ -53,7 +53,7 @@ def zip_to_deploy(f):
     """Get zip file and make deploy in correct folder"""
     log = ''
     with zipfile.ZipFile(os.path.join(POOL, f)) as zip:
-        log += zip.extractall(DEPLOY)
+        zip.extractall(DEPLOY)
     log += subprocess.check_output(['pip', 'install', '-r', os.path.join(DEPLOY, 'requirements.txt')])
     log += shutil.move(os.path.join(POOL, f), TRASH)
     log += subprocess.check_output(['chown', '-R', 'www-data:www-data', DEPLOY])
