@@ -4,7 +4,8 @@
 .PHONY: all run sync install
 
 include env_vars
-
+include includes/servers.mk
+include includes/$(SERVER_TYPE).mk
 
 all:
 	@echo $(ENVVAR_NAME)
@@ -13,47 +14,18 @@ all:
 
 sync:
 	cd $(ROOT_DIR) && git pull origin master
-	apt-get install -y $(shell cat $(ROOT_DIR)/worker/system_dep.txt)
+	$(INSTALL_CMD) $(shell cat $(ROOT_DIR)/worker/system_dep.txt)
 	cd $(ROOT_DIR) && pip install -r requirements.txt
 
 run:
-	python $(ROOT_DIR)/worker/deployer.py > $(ROOT_DIR)/worker/deployer.log &	
+	python $(ROOT_DIR)/worker/deployer.py &	
 
 
 install:
 	$(MAKE) $(SERVER_TYPE)_install
 
 
-ubuntu_install:
-	apt-get update
-	apt-get -y upgrade
-	apt-get -y install openssh-server python python-dev apache2 libapache2-mod-wsgi libapache2-mod-proxy-html openssl python-pip
-	-ln -s /etc/apache2/mods-available/proxy_http.load /etc/apache2/mods-enabled/proxy_http.load
-	a2enmod ssl
-	a2enmod proxy
-	a2enmod proxy_http
-	a2enmod wsgi
-	-mkdir /etc/apache2/ssl
-	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/apache2/ssl/server.key -out /etc/apache2/ssl/server.crt
-	-mkdir -p $(POOL_DIR)
-	-mkdir -p $(TRASH_DIR)
-	-mkdir -p $(DEPLOY_DIR)
-	chown -R www-data:www-data $(INSTALL_DIR)
-	-mkdir -p /private/var/log/apache2/
-	cp python.conf /etc/apache2/sites-available/
-	a2dissite 000-default
-	a2ensite python
-	service apache2 restart
-	$(MAKE) updaterc_startup
-
 startup:
-	echo "#!/usr/bin/env bash" > start_amazon
 	echo "cd $(ROOT_DIR);" >> start_amazon
 	echo "make sync;" >> start_amazon
 	echo "make run;" >> start_amazon
-
-updaterc_startup:
-	$(MAKE) startup
-	cp start_amazon /etc/init.d/
-	chmod +x /etc/init.d/start_amazon
-	update-rc.d start_amazon defaults
