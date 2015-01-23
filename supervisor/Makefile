@@ -19,9 +19,18 @@ sync:
 run:
 	bash $(ROOT_DIR)/supervisor/start.sh > $(ROOT_DIR)/supervisor/start.log &
 
+cleaner:
+	echo "for f in $(INSTALL_DIR)/*/; do" > clean_versions
+	echo "cd '$f';" >> clean_versions
+	echo "rm *.zip;" >> clean_versions
+	echo "done" >> clean_versions
+	cp clean_versions /usr/bin/
+	chmod +x /usr/bin/clean_versions
+
 install:
 	$(MAKE) $(SERVER_TYPE)_install
 	$(MAKE) user
+	$(MAKE) cleaner
 
 startup:
 	echo "cd $(ROOT_DIR);" >> start_amazon
