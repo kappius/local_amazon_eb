@@ -7,7 +7,7 @@ for d in ${WORKERS_DIR}; do
 	export IP=${d##*/};
 	watchmedo shell-command \
 	    --patterns="*.zip" \
-	    --command="xe snapshot-revert snapshot-uuid=${UUIDS[$COUNTER]};xe vm-start -u root vm=${NAMES[$COUNTER]};"'scp -o ConnectionAttempts=10000 ${watch_src_path} '"${WORKER_USER}@${IP}:${WORKER_MACHINE_DIR}/; " \
+	    --command=""'if [ -f "${watch_src_path}" ]; then '"xe snapshot-revert snapshot-uuid=${UUIDS[$COUNTER]};xe vm-start -u root vm=${NAMES[$COUNTER]};"'scp -o ConnectionAttempts=10000 ${watch_src_path} '"${WORKER_USER}@${IP}:${WORKER_MACHINE_DIR}/; fi" \
 	    --wait \
 	    --drop \
 	    $d &
