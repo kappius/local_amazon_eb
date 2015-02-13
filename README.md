@@ -1,5 +1,9 @@
 # Local Amazon EB
 
+## Topology
+
+![Topology](https://github.com/kappius/local_amazon_eb/blob/master/topology.png)
+
 ## INSTALL
 
 ### Supervisor
@@ -20,7 +24,7 @@ make install ON=supervisor
 
 #### Setup a cleaner
 
-supervisor installation generate a clean_versions file that clean all versions deployed to each worker. It's only clean historical versions, and don't remove worker from production (just some minutes offline)
+supervisor installation generate a clean_versions file that clean all versions deployed to each worker. It's only clean historical versions, and don't remove worker from production
 
 ### Worker
 Using Ubuntu and GIT:
