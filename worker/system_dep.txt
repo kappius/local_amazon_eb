@@ -1,1 +1,2 @@
 libmysqlclient-dev
+apache2-mpm-event
