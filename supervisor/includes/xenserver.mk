@@ -1,5 +1,6 @@
 export INSTALL_CMD=yum install -y
 
+# Create user anda configure folder permission 
 user:
 	-adduser $(ACCESS_USER)
 	-groupadd $(ACCESS_GROUP)

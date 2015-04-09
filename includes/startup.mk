@@ -1,3 +1,4 @@
+# AutoStart service, like cron
 updaterc_startup:
 	echo "#!/usr/bin/env bash" > start_amazon
 	$(MAKE) startup
