@@ -15,31 +15,39 @@ look inside env_vars file and you see something like this
 
 Read description and configure all after start supervisor
 
-### SERVER_TYPE
+#### SERVER_TYPE
 
 actually we support
 * xenserver
 * centOS_7x64
 You can make anothers configurations in /include/servers.mk
 
-### WORKERS_DIR
+#### WORKERS_DIR
  wherer has enviroment configuration files
 
-### WORKERS_UUID
+#### WORKERS_UUID
  the universally unique identifier
 
-### WORKERS_NAME
+#### WORKERS_NAME
 <Need Description>
 
-### WORKER_USER
+#### WORKER_USER
  <Need Description>
 
 ### WORKER_MACHINE_DIR
 where supervisor will running
 
-### ACCESS_USER
+#### ACCESS_USER
 User to deploy
 
 
-### ACCESS_GROUP
+#### ACCESS_GROUP
 group of user to deploy
+
+
+## Monitor folders
+<< Precisa revisar ingles xD>>
+the start.sh job is monitor all input data, if the patterns has pattern match,
+
+here you can find a good book of XenServer if you need consult something 
+http://goo.gl/u6l90P
