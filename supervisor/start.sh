@@ -2,6 +2,7 @@
 export COUNTER=0;
 export UUIDS=($WORKERS_UUID);
 export NAMES=($WORKERS_NAME);
+export ENV_BASH="/usr/bin/env bash";
 
 # Monitors all folders in WORKERS_DIR,
 # Command call the script task, basics work, 

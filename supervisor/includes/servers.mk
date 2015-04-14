@@ -8,17 +8,17 @@ include $(ROOT_DIR)/includes/startup.mk
 xenserver_install:
 	yum -y install openssh-server python python-devel
 	python2.7 --version || $(MAKE) add_python
-	$(MAKE)add_pip
+	$(MAKE) add_pip
 	-mkdir -p $(WORKERS_DIR)
 	$(MAKE) chkconfig_startup
 
 # Configure centOS 7x64
 centOS_7x64_install:
 	yum -y install openssh-server python python-devel
-        python2.7 --version || $(MAKE) add_python
-        $(MAKE)add_pip
-        -mkdir -p $(WORKERS_DIR)
-        $(MAKE) chkconfig_startup
+	python2.7 --version || $(MAKE) add_python
+	$(MAKE) add_pip
+	-mkdir -p $(WORKERS_DIR)
+	$(MAKE) chkconfig_startup
 
 ############ Utils ################ 
 # Install  2.7.6 python version
