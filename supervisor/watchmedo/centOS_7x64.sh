@@ -1,3 +1,6 @@
  #!/usr/bin/env bash
 
-echo "works" >>log.txt
+
+echo ${UUIDS[COUNTER]};
+echo ${watch_src_path};
+echo ${IP} 
