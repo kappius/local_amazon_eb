@@ -14,6 +14,7 @@ all:
 
 sync:
 	cd $(ROOT_DIR) && git pull origin master
+	$(UPDATE_CMD)
 	$(INSTALL_CMD) $(shell cat $(ROOT_DIR)/worker/system_dep.txt)
 	cd $(ROOT_DIR) && pip install -r requirements.txt
 
